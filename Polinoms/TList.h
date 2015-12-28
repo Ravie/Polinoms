@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <tchar.h>
 #include <string>
 
 using namespace std;
@@ -8,50 +10,54 @@ class Monom
 	int sv; // свертка 
 	Monom *next;
 public:
-	// constructor
 	Monom(int _coef = 0, int _sv = -1)
 	{
 		coef = _coef;
 		sv = _sv;
 		next = 0;
 	}
-	// destructor
-	~Monom()
-	{}
-	// copy constructor
+
+	~Monom() {}
+
 	Monom(Monom *tmp)
 	{
 		coef = tmp->coef;
 		sv = tmp->sv;
 		next = 0;
 	}
-	// operator "="
+
 	Monom &operator=(Monom tmp)
 	{
 		coef = tmp.coef;
 		sv = tmp.sv;
 		return *this;
 	}
+
 	void SetNext(Monom *tmp)
 	{
 		next = tmp;
 	}
+
 	Monom *GetNext()
 	{
 		return next;
 	}
+
 	int GetSV()
 	{
 		return sv;
 	}
+
 	int GetCoef()
 	{
 		return coef;
 	}
+
 	void SetCoef(int _coef)
 	{
 		coef = _coef;
 	}
+
 	void SetSV(int _sv)
 	{
 		sv = _sv;
@@ -61,13 +67,12 @@ class CList
 {
 	Monom *head;
 public:
-	//constructor
 	CList()
 	{
 		head = new Monom;
 		head->SetNext(head);
 	}
-	// destructor
+
 	~CList()
 	{
 		Monom *current = head->GetNext();
@@ -93,7 +98,7 @@ public:
 			current = head->GetNext();
 		}
 	}
-	// copy constructor
+
 	CList(CList &tmp)
 	{
 		head = new Monom;
@@ -104,13 +109,13 @@ public:
 		while (current != tmp.head)
 		{
 			box = new Monom(*current);
-			box->SetNext(head);//!!!!
-			last->SetNext(box);//!!!!
+			box->SetNext(head);
+			last->SetNext(box);
 			last = last->GetNext();
 			current = current->GetNext();
 		}
 	}
-	// operator"="
+
 	CList &operator=(CList &tmp)
 	{
 		CDelete();
@@ -119,10 +124,9 @@ public:
 		Monom *box;
 		while (current != tmp.head)
 		{
-			//Monom 
 			box = new Monom(*current);
-			box->SetNext(head);//!!!!
-			last->SetNext(box);//!!!!
+			box->SetNext(head);
+			last->SetNext(box);
 			last = last->GetNext();
 			current = current->GetNext();
 		}
@@ -204,6 +208,7 @@ public:
 		}
 		return *this;
 	}
+
 	void MultiMonom(int _maxSt, int _coef, int _sv)
 	{
 		int power[3] = { 0, 0, 0 };
@@ -219,7 +224,7 @@ public:
 			curr_power[0] = curr_sv / (_maxSt*_maxSt);
 			curr_power[1] = (curr_sv / _maxSt) % _maxSt;
 			curr_power[2] = curr_sv % _maxSt;
-
+			
 			for (int i = 0; i < 3; i++)
 			if ((curr_power[i] + power[i])>_maxSt)
 			{
@@ -228,10 +233,11 @@ public:
 			}
 
 			current->SetSV(current->GetSV() + _sv);
-			current->SetCoef((current->GetCoef())*_coef);
+	    	current->SetCoef((current->GetCoef())*_coef);
 			current = current->GetNext();
-		}
+		}	
 	}
+
 	CList MultiList(int _maxSt, CList tmp)
 	{
 		CList _copy(*this);
@@ -261,9 +267,6 @@ public:
 		{
 			if (spolinom[i] != ' ')
 			{
-				//	if (a[k] != "")
-				//		a[++k] = "";
-				//	else
 				if ((spolinom[i] == '+') || (spolinom[i] == '-'))
 				if (a[k] != "")
 				{
@@ -274,6 +277,7 @@ public:
 			}
 		}
 	}
+
 	void StrToMonoms(string spolinom, int &k, string *monoms)
 	{
 		int len = spolinom.length();
@@ -290,6 +294,7 @@ public:
 			monoms[k] = monoms[k] + spolinom[i];
 		}
 	}
+
 	void MakeMonom(string in)
 	{
 		const string st = "xyz";
@@ -321,7 +326,6 @@ public:
 			List.AddMonom(sv, coef);
 	}
 
-	// constructor
 	Polinom(int _maxSt = 10, string _st = "")
 	{
 		maxSt = _maxSt;
@@ -332,7 +336,7 @@ public:
 		for (int i = 0; i <= n; i++)
 			MakeMonom(a[i]);
 	}
-	// copy constructor
+
 	Polinom(Polinom &tmp)
 	{
 		maxSt = tmp.maxSt;
@@ -344,41 +348,45 @@ public:
 		List = tmp.List;
 		return *this;
 	}
-	// destructor
-	~Polinom()
-	{}
+
+	~Polinom() {}
+
 	void Input(string spolinom)
 	{
 		Polinom tmp(maxSt, spolinom);
 		List = tmp.List;
 	}
+
 	string Output()
 	{
 		return List.GetPolinom(maxSt);
 	}
+
 	Polinom operator+(Polinom tmp)
 	{
 		Polinom result(*this);
 		result.List.Combine(tmp.List);
 		return result;
 	}
+
 	Polinom operator*(int c)
 	{
 		Polinom result(*this);
 		result.List = (result.List)*c;
 		return result;
 	}
+
 	Polinom operator-(Polinom tmp)
 	{
 		Polinom result(*this);
 		result.List.Combine((tmp.List)*(-1));
 		return result;
 	}
+
 	Polinom operator*(Polinom tmp)
 	{
-		Polinom a(*this);	
-		a.List = a.List.MultiList(a.maxSt, tmp.List);
+		Polinom a(*this);
+		a.List=	a.List.MultiList(a.maxSt, tmp.List);
 		return a;
 	}
-
 };
