@@ -10,9 +10,9 @@ void main()
 {
 	setlocale(LC_ALL, "Russian");
 	int input, num;
-	string str1 = "2x^4y^2z+17z^4+y";
-	string str2 = "2x^4y^2z+3xy-5y";
-	Polinom p1(10,str1);
+	string str1;
+	string str2;
+	Polinom p1(10);
 	Polinom p2(p1);
 	Polinom p3;
 
@@ -24,7 +24,7 @@ void main()
 	cin >> str2;
 	p2.Input(str2);
 
-	cout << "\n1 - Произведение полиномов\n2 - Сумма полиномов\n3 - Разность полиномов\n4 - Умножение полинома на константу\n5 - Выход\n";
+	cout << "\n1 - Произведение полиномов\n2 - Сумма полиномов\n3 - Разность полиномов\n4 - Умножение на константу\n5 - Выход\n";
 	cin >> input;
 	switch (input)
 	{
@@ -51,8 +51,16 @@ void main()
 		int cnst;
 		cout << "Введите константу: ";
 		cin >> cnst;
-		p3 = p1 * cnst;
-		cout << p3.Output() << endl;
+		if (num == 1)
+		{
+			p1 = p1 * cnst;
+			cout << p1.Output() << endl;
+		}
+		else
+		{
+			p2 = p2 * cnst;
+			cout << p2.Output() << endl;
+		}
 		break;
 	default:
 		break;
