@@ -45,3 +45,5 @@
 *.cd
 *.user
 *.opendb
+*.sln
+*.txt
