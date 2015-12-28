@@ -258,26 +258,6 @@ class Polinom
 	int maxSt;
 	CList List;
 public:
-	void StrToArr(string spolinom, int &k, string *a)
-	{
-		a = new string[(spolinom.length()) / 2 + 1];
-		k = 0;
-		a[0] = "";
-		for (int i = 0; i < spolinom.length(); i++)
-		{
-			if (spolinom[i] != ' ')
-			{
-				if ((spolinom[i] == '+') || (spolinom[i] == '-'))
-				if (a[k] != "")
-				{
-					k++;
-					a[k] = "";
-				}
-				a[k] = a[k] + spolinom[i];
-			}
-		}
-	}
-
 	void StrToMonoms(string spolinom, int &k, string *monoms)
 	{
 		int len = spolinom.length();
