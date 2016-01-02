@@ -224,18 +224,18 @@ public:
 			curr_power[0] = curr_sv / (_maxSt*_maxSt);
 			curr_power[1] = (curr_sv / _maxSt) % _maxSt;
 			curr_power[2] = curr_sv % _maxSt;
-			
+
 			for (int i = 0; i < 3; i++)
-			if ((curr_power[i] + power[i])>_maxSt)
-			{
-				CDelete();
-				current = head;
-			}
+				if ((curr_power[i] + power[i])>_maxSt)
+				{
+					CDelete();
+					current = head;
+				}
 
 			current->SetSV(current->GetSV() + _sv);
-	    	current->SetCoef((current->GetCoef())*_coef);
+			current->SetCoef((current->GetCoef())*_coef);
 			current = current->GetNext();
-		}	
+		}
 	}
 
 	CList MultiList(int _maxSt, CList tmp)
@@ -266,11 +266,11 @@ public:
 		for (int i = 0; i < len; i++)
 		{
 			if ((spolinom[i] == '+') || (spolinom[i] == '-'))
-			if (monoms[k] != "")
-			{
-				k++;
-				monoms[k] = "";
-			}
+				if (monoms[k] != "")
+				{
+					k++;
+					monoms[k] = "";
+				}
 			monoms[k] = monoms[k] + spolinom[i];
 		}
 	}
@@ -284,25 +284,25 @@ public:
 		{
 			int pos = in.find(st[i]);
 			if (pos >= 0)
-			if (in[pos + 1] != '^')
-			{
-				power[i] = 1;
-				in.erase(pos, 1);
-			}
-			else
-			{
-				tmp = "";
-				for (int j = pos + 2; (j < in.length()) && ('0' <= in[j]) && ('9' >= in[j]); j++)
-					tmp = tmp + in[j];
-				power[i] = stoi(tmp);
-				in.erase(pos, tmp.length() + 2);
-			}
+				if (in[pos + 1] != '^')
+				{
+					power[i] = 1;
+					in.erase(pos, 1);
+				}
+				else
+				{
+					tmp = "";
+					for (int j = pos + 2; (j < in.length()) && ('0' <= in[j]) && ('9' >= in[j]); j++)
+						tmp = tmp + in[j];
+					power[i] = stoi(tmp);
+					in.erase(pos, tmp.length() + 2);
+				}
 		}
 		if (in == "" || in == "+" || in == "-")
 			in = in + "1";
 		int coef = stoi(in);
 		int sv = power[0] * maxSt*maxSt + power[1] * maxSt + power[2];
-		if (((power[0]) <maxSt) && ((power[1]) <maxSt) && ((power[2]) <maxSt))
+		if (((power[0]) < maxSt) && ((power[1]) < maxSt) && ((power[2]) < maxSt))
 			List.AddMonom(sv, coef);
 	}
 
@@ -322,6 +322,7 @@ public:
 		maxSt = tmp.maxSt;
 		List = tmp.List;
 	}
+
 	Polinom &operator=(Polinom &tmp)
 	{
 		maxSt = tmp.maxSt;
@@ -366,7 +367,7 @@ public:
 	Polinom operator*(Polinom tmp)
 	{
 		Polinom a(*this);
-		a.List=	a.List.MultiList(a.maxSt, tmp.List);
+		a.List = a.List.MultiList(a.maxSt, tmp.List);
 		return a;
 	}
 };
